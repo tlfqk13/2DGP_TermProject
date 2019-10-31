@@ -1,18 +1,26 @@
 from pico2d import *
 
-class Bubble:
-    def __init__(self,x=400,y=90,velocity=1):
+import game_world
 
-        self.x,self.y=400,90
-        self.frame=0
-        self.image = load_image('Characbub0.png')
-        self.timer=100
-    def update(self):
-        self.frame = (self.frame + 1) % 4
-        self.timer-=10
+class Bubble:
+
+    image=None
+
+    def __init__(self,x=400,y=90,velocity=0):
+      self.frame=0
+      if Bubble.image==None:
+        self.image = load_image('Characbub2.png')
+      self.x,self.y,self.velocity=x,y,velocity
     def draw(self):
-        if timer!=0:
-         self.image.clip_draw(self.frame*60,0,60,65,self.x,self.y)
+        #boy.frame=(boy.frame+1)%8
+        self.frame=(self.frame+1)%4
+        #self.image.cilp_draw(self.frame*60,0,60,45,self.x,self.y)
+        self.image.clip_draw(self.frame*60,0,60,65,self.x,self.y)
+    def update(self):
+        self.x+=self.velocity
+
+
+
 
 
 

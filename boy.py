@@ -1,4 +1,6 @@
 from pico2d import *
+from bubble import Bubble
+import game_world
 
 # Boy Event
 RIGHT_DOWN,LEFT_DOWN,RIGHT_UP,LEFT_UP,UP_UP,DOWN_DOWN,UP_DOWN,DOWN_UP,\
@@ -45,7 +47,7 @@ class IdleState:
     @staticmethod
     def exit(boy,event):
         if event==LCTRL:
-            boy.bomb()
+            boy.Bubble()
         pass
     @staticmethod
     def do(boy):
@@ -86,7 +88,7 @@ class RunState:
     @staticmethod
     def exit(boy, event):
         if event==LCTRL:
-            boy.bomb()
+            boy.Bubble()
         pass
     @staticmethod
     def do(boy):
@@ -223,5 +225,7 @@ class Boy:
             self.add_event(key_event)
         pass
 
-    def bomb(self):
+    def Bubble(self):
+        bubble=Bubble(self.x,self.y)
+        game_world.add_object(bubble,1)
         print('bomb')

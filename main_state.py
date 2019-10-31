@@ -7,6 +7,7 @@ from pico2d import *
 import game_framework
 import title_state
 import pause_state
+import game_world
 
 from boy import Boy
 from map import Map
@@ -18,20 +19,19 @@ boy = None
 grass = None
 font = None
 bubble=None
+map=None
 
 
 def enter():
-    global boy,map,bubble
+    global boy
     boy=Boy()
     map=Map()
-    bubble=Bubble()
-    pass
+    game_world.add_object(map,0)
+    game_world.add_object(boy,1)
+
 
 def exit():
-    global boy,map,bubble
-    del(boy)
-    del(map)
-    del(bubble)
+    game_world.clear()
 
     pass
 
@@ -57,18 +57,16 @@ def handle_events():
 
 
 def update():
-    boy.update()
-    bubble.update()
-    pass
+    for game_object in game_world.all_objects():
+        game_object.update()
+
 
 
 def draw():
     clear_canvas()
-    map.draw()
-    boy.draw()
-    bubble.draw()
+    for game_object in game_world.all_objects():
+        game_object.draw()
     update_canvas()
-    pass
 
 
 
