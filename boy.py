@@ -43,16 +43,15 @@ class IdleState:
             boy.y_velocity-=1
         elif event==DOWN_UP:
             boy.y_velocity+=1
-        boy.timer=1000
+        boy.timer=4
     @staticmethod
     def exit(boy,event):
         if event==LCTRL:
             boy.Bubble()
-        pass
     @staticmethod
     def do(boy):
         boy.frame=(boy.frame+1)%8
-        boy.timer-=10
+        boy.timer-=1
         #if boy.timer==0:
             #boy.add_event(SLEEP_TIMER)
     @staticmethod
