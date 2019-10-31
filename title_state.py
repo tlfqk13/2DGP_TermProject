@@ -10,7 +10,7 @@ image = None
 
 def enter():
     global image
-    image=load_image('maintitle_sp_02.png')
+    image=load_image('2019032208598094313_1.png')
     pass
 
 def exit():

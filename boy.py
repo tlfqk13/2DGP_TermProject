@@ -1,5 +1,7 @@
 from pico2d import *
 from bubble import Bubble
+
+
 import game_world
 
 # Boy Event
@@ -48,6 +50,7 @@ class IdleState:
     def exit(boy,event):
         if event==LCTRL:
             boy.Bubble()
+            #boy.Bubble_destroy()
     @staticmethod
     def do(boy):
         boy.frame=(boy.frame+1)%8
@@ -88,6 +91,7 @@ class RunState:
     def exit(boy, event):
         if event==LCTRL:
             boy.Bubble()
+
         pass
     @staticmethod
     def do(boy):
@@ -175,6 +179,7 @@ class Boy:
         self.R_image=load_image('Right.png')
         self.Up_image=load_image('Up.png')
         self.Down_image=load_image('Down.png')
+        self.font = load_font('ENCR10B.TTF', 16)
         self.dir = 1
         self.y_dir=1
         self.vector_y=250
@@ -182,26 +187,20 @@ class Boy:
         self.y_velocity=0
         self.frame=0
         self.timer=0
-        # fill here
         self.event_que=[]
         self.cur_state=IdleState
         self.cur_state.enter(self,None)
 
-    def update_state(self):
-        if len(self.event_que)>0:
-            event=self.event_que.pop()
-            self.cur_state.exit(self.event)
-            self.cur_state=next_state_table[self.cur_state][event]
-            self.cur_state.enter(self.event)
-    def change_state(self,  state):
-        # fill here
-        pass
 
+    def get_bb(self):
+        return self.x-30,self.y-30,self.x+30,self.y+30
+
+    def Bubble(self):
+        bubble=Bubble(self.x,self.y,self.timer)
+        game_world.add_object(bubble,1)
 
     def add_event(self, event):
         self.event_que.insert(0,event)
-        pass
-
 
     def update(self):
         self.cur_state.do(self)
@@ -215,16 +214,13 @@ class Boy:
 
     def draw(self):
         self.cur_state.draw(self)
-        pass
-
+        self.font.draw(self.x - 60, self.y + 50, '(Time: %3.2f)'
+                       % get_time(),(255, 255, 0))
+        draw_rectangle(*self.get_bb())
 
     def handle_event(self, event):
         if(event.type,event.key) in key_event_table:
             key_event=key_event_table[(event.type,event.key)]
             self.add_event(key_event)
-        pass
 
-    def Bubble(self):
-        bubble=Bubble(self.x,self.y)
-        game_world.add_object(bubble,1)
-        print('bomb')
+
