@@ -196,7 +196,7 @@ class Boy:
         return self.x-30,self.y-30,self.x+30,self.y+30
 
     def Bubble(self):
-        bubble=Bubble(self.x,self.y,self.timer)
+        bubble=Bubble(self.x,self.y)
         game_world.add_object(bubble,1)
 
     def add_event(self, event):

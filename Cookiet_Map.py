@@ -2,7 +2,7 @@ from pico2d import *
 import os
 
 os.getcwd()
-os.chdir('C:\\2DGP\\2DGP_TermProject')
+os.chdir('C:\\Son\\2DGP_TermProject\\image')
 
 open_canvas(850,650)
 

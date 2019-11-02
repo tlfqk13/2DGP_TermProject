@@ -4,19 +4,20 @@ from bubble import Bubble
 import game_world
 
 class Bubble_destroy:
-    image=None
-    b_image=None
-    def __init__(self,x=400,y=90,velocity=0,start_timer=400,timer=400):
+    def __init__(self):
       self.frame=0
-      if Bubble_destroy.image==None:
-        self.b_image = load_image('padoexLeft.png')
-      self.x,self.y,self.velocity,self.start_timer,self.timer\
-          =x,y,velocity,start_timer,timer
+      self.b_image = load_image('padoexLeft.png')
+      self.timer=300
     def draw(self):
-         self.frame=(self.frame+1)%4
-
-         self.b_image.draw(self.x,self.y)
+        self.x=400
+        self.y=300
+        self.frame=(self.frame+1)%4
+        self.b_image.draw(self.x,self.y)
     def update(self):
+        self.timer-=1
+        if self.timer==0 :
+            game_world.remove_object(self)
+
         pass
 
 
