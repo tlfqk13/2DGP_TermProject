@@ -44,27 +44,21 @@ def enter():
     map=Map()
     game_world.add_object(map,0)
 
-    global bubbles,bubbles_pos
-    bubbles=Bubble()
-    game_world.add_object(bubbles,1)
-
-
-    #bubbles= [Bubble() for i in range(10)]
-    #for i in range(10):
-     #game_world.add_object(bubbles[i],1)
-
-    global box
-    box=[Box() for i in range(10)]
+    global bubbles
+    #bubbles=Bubble()
+    #game_world.add_object(bubbles,1)
+    bubbles= [Bubble() for i in range(10)]
     for i in range(10):
-     game_world.add_object(box[i],1)
-
+     game_world.add_object(bubbles[i],1)
+    global box
+    box=Box()
+    game_world.add_object(box,1)
     #box=Box()
     #game_world.add_object(box,1)
-
-    global item
-    item=Item()
-    game_world.add_object(item,1)
-
+    global items
+    items=[Item() for i in range(10)]
+    for i in range(10):
+     game_world.add_object(items[i],1)
     global bubble_destroy
     bubble_destroy=Bubble_destroy()
     game_world.add_object(bubble_destroy,1)
@@ -93,15 +87,20 @@ def handle_events():
 def update():
    for game_object in game_world.all_objects():
         game_object.update()
-   '''
-   for i in bubbles:
-       if collide(boy, i):
-           print("bubble_collision")
 
-   if collide(item,boy):
-      print("item_collision")
-'''
-   pass
+   #for i in bubbles:
+      #if collide(boy, i):
+           #print("bubble_collision")
+           #bubbles.remove(i)
+           #game_world.remove_object(i)
+
+   if collide(items,boy):
+      #print("item_collision")
+      #boy.update()
+      game_world.remove_object(items)
+
+   if collide(box,boy):
+      game_world.remove_object(box)
 
 def draw():
     clear_canvas()
