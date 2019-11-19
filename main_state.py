@@ -13,7 +13,6 @@ from boy import Boy
 from map import Map
 from box import Box
 from bubble import Bubble
-from item import Item
 from bubble_destroy import Bubble_destroy
 
 name = "MainState"
@@ -50,15 +49,11 @@ def enter():
     bubbles= [Bubble() for i in range(10)]
     for i in range(10):
      game_world.add_object(bubbles[i],1)
+
     global box
-    box=Box()
-    game_world.add_object(box,1)
-    #box=Box()
-    #game_world.add_object(box,1)
-    global items
-    items=[Item() for i in range(10)]
-    for i in range(10):
-     game_world.add_object(items[i],1)
+    box=[Box() for i in range(10)]
+    game_world.add_objects(box,1)
+
     global bubble_destroy
     bubble_destroy=Bubble_destroy()
     game_world.add_object(bubble_destroy,1)
@@ -88,19 +83,9 @@ def update():
    for game_object in game_world.all_objects():
         game_object.update()
 
-   #for i in bubbles:
-      #if collide(boy, i):
-           #print("bubble_collision")
-           #bubbles.remove(i)
-           #game_world.remove_object(i)
+   if collide(boy,bubble_destroy):
+      game_world.remove_object(boy)
 
-   if collide(items,boy):
-      #print("item_collision")
-      #boy.update()
-      game_world.remove_object(items)
-
-   if collide(box,boy):
-      game_world.remove_object(box)
 
 def draw():
     clear_canvas()

@@ -113,23 +113,6 @@ class RunState:
         elif boy.y_velocity==-1 or 0:
             boy.Down_image.clip_draw(boy.frame * 44, 0, 44, 62, boy.x, boy.y)
 
-
-class SleepState:
-    @staticmethod
-    def enter(boy,event):
-        boy.frame = 0
-    @staticmethod
-    def exit(boy, event):
-        pass
-    @staticmethod
-    def do(boy):
-        boy.frame = (boy.frame + 1) % 8
-    @staticmethod
-    def draw(boy):
-        if boy.dir == 1:boy.L_image.clip_draw(boy.frame * 44, 0, 44, 62, boy.x, boy.y)
-        else:
-            boy.R_image.clip_draw(boy.frame * 44, 0, 44, 62, boy.x, boy.y)
-
 class DashState:
     @staticmethod
     def enter(boy, event):
