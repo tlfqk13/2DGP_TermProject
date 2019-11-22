@@ -13,6 +13,8 @@ from boy import Boy
 from map import Map
 from box import Box
 from bubble import Bubble
+from item import Item
+from Cookiet_Map import Stage
 from bubble_destroy import Bubble_destroy
 
 name = "MainState"
@@ -38,6 +40,9 @@ def enter():
     boy=Boy()
     game_world.add_object(boy, 1)
 
+    #global stage
+    #stage=Stage()
+    #game_world.add_object(stage,0)
 
     global map
     map=Map()
@@ -51,12 +56,16 @@ def enter():
      game_world.add_object(bubbles[i],1)
 
     global box
-    box=[Box() for i in range(10)]
+    box=[Box(100,200) for i in range(10)]
     game_world.add_objects(box,1)
 
     global bubble_destroy
     bubble_destroy=Bubble_destroy()
     game_world.add_object(bubble_destroy,1)
+
+    global item
+    item=[Item() for i in range(10)]
+    game_world.add_objects(item,1)
 
 
 def exit():
@@ -83,8 +92,8 @@ def update():
    for game_object in game_world.all_objects():
         game_object.update()
 
-   if collide(boy,bubble_destroy):
-      game_world.remove_object(boy)
+   #if collide(boy,bubble_destroy):
+    #  game_world.remove_object(boy)
 
 
 def draw():
