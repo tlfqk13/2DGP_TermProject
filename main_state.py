@@ -15,13 +15,13 @@ from box import Box
 from bubble import Bubble
 from item import Item
 from Cookiet_Map import Stage
+
 from bubble_destroy import Bubble_destroy
 
 name = "MainState"
 
 boy = None
 map=None
-
 
 def collide(a,b):
     left_a, bottom_a, right_a, top_a = a.get_bb()
@@ -56,7 +56,6 @@ def enter():
     box_x=[Box(40*(i+1),55) for i in range(15)]+[Box(40*(i+1),540) for i in range(15)]
     for i in range(30):
         game_world.add_object(box_x[i],1)
-        print(box_x[i])
     box_y = [Box(40,42*(i+2)) for i in range(11)]+[Box(600,42*(i+2))for i in range(10)]
     for i in range(21):
         game_world.add_object(box_y[i], 1)
@@ -105,7 +104,6 @@ def update():
        if collide(boy,box_y[i]):
            game_world.remove_object(box_y)
            print("collision")
-
 
 def draw():
     clear_canvas()

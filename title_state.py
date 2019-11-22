@@ -1,57 +1,84 @@
-import game_framework
 from pico2d import *
-
+import object as o
+import game_framework
 import main_state
-import pause_state
 
 name = "TitleState"
-image = None
+background = None
+char = None
+title = None
+oList = []
 
+class button(o.object):
+    def __init__(self, imageString, origin, future):
+        o.object.__init__(self,imageString)
+        self.origin = origin
+        self.future = future
+    def overlapButton(self, x, y):
+        if self.x - self.imageWidth / 4 < x and self.x + self.imageWidth /4 > x and \
+            self.y - self.imageHeight / 4 < y and self.y + self.imageHeight /4 > y:
+            self.changeClipFrame(0, self.future)
+        else:
+            self.bottom = self.origin
+    def clickButton(self,x,y):
+        if self.x - self.imageWidth / 4 < x and self.x + self.imageWidth / 4 > x and \
+                self.y - self.imageHeight / 4 < y and self.y + self.imageHeight / 4 > y:
+            return True
+        else:
+            return False
 
 def enter():
-    global image
-    image=load_image('2019032208598094313_1.png')
-    pass
+    global background,char,title
+    title = o.object('start.png')
+    background=o.object('background.png')
+    oList.append(button('start.png', 450, 150))
+    oList.append(button('start.png', 300, 0))
+    background.setPos(400,300)
+    title.setPos(300,850)
+    oList[0].setPos(100, 200)
+    oList[0].setSize(100,100)
+    oList[0].setClipSize(163,155)
+    #oList[1].setPos(100, 50)
+    #oList[1].setSize(100, 100)
+    #oList[1].setClipSize(163, 155)
 
 def exit():
-    global image
-    del(image)
-    pass
+    global background
+    del background
+    oList.clear()
 
 def handle_events():
-    events=get_events()
+    events = get_events()
     for event in events:
-        if event.type==SDL_QUIT:
+        if event.type == SDL_QUIT:
             game_framework.quit()
         else:
-            if(event.type,event.key)==(SDL_KEYDOWN,SDLK_ESCAPE):
+            if (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
                 game_framework.quit()
-            elif(event.type,event.key)==(SDL_KEYDOWN,SDLK_SPACE):
-                game_framework.change_state(main_state)
-    pass
-
+            if event.type == SDL_MOUSEMOTION:
+                x = event.x
+                y = 600 - 1 - event.y
+                oList[0].overlapButton(x,y)
+                oList[1].overlapButton(x,y)
+            if event.type == SDL_MOUSEBUTTONDOWN:
+                x = event.x
+                y = 600 - 1 - event.y
+                if oList[0].clickButton(x, y) is True:
+                    game_framework.change_state(main_state)
+                    break
+                if oList[1].clickButton(x, y) is True:
+                    game_framework.quit()
 
 def draw():
     clear_canvas()
-    image.draw(400,300)
+    title.draw()
+    background.draw()
+
+    for i in range(len(oList)-2):
+        oList[i].update()
+    oList[0].clip_draw()
+    oList[1].clip_draw()
     update_canvas()
-    pass
-
-
 
 def update():
     pass
-
-
-def pause():
-    pass
-
-
-def resume():
-    pass
-
-
-
-
-
-
