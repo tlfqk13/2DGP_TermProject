@@ -55,9 +55,14 @@ def enter():
     for i in range(10):
      game_world.add_object(bubbles[i],1)
 
-    global box
-    box=[Box(100,200) for i in range(10)]
-    game_world.add_objects(box,1)
+    global box_x,box_y
+    box_x=[Box(40*(i+1),55) for i in range(15)]
+    for i in range(15):
+        game_world.add_object(box_x[i],1)
+    box_y = [Box(40,42*(i+2)) for i in range(12)]
+    for i in range(12):
+        game_world.add_object(box_y[i], 1)
+
 
     global bubble_destroy
     bubble_destroy=Bubble_destroy()
