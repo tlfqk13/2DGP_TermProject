@@ -208,3 +208,5 @@ class Boy:
             self.add_event(key_event)
 
 
+    def stop(self):
+        self.velocity=0

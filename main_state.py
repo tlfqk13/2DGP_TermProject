@@ -24,17 +24,13 @@ map=None
 
 
 def collide(a,b):
-
     left_a, bottom_a, right_a, top_a = a.get_bb()
     left_b, bottom_b, right_b, top_b = b.get_bb()
     if left_a > right_b: return False
     if right_a < left_b: return False
     if top_a < bottom_b: return False
     if bottom_a > top_b: return False
-
     return True
-
-
 def enter():
     global boy
     boy=Boy()
@@ -55,14 +51,15 @@ def enter():
     for i in range(10):
      game_world.add_object(bubbles[i],1)
 
+    ## bulid box !!##
     global box_x,box_y
-    box_x=[Box(40*(i+1),55) for i in range(15)]
-    for i in range(15):
+    box_x=[Box(40*(i+1),55) for i in range(15)]+[Box(40*(i+1),540) for i in range(15)]
+    for i in range(30):
         game_world.add_object(box_x[i],1)
-    box_y = [Box(40,42*(i+2)) for i in range(12)]
-    for i in range(12):
+        print(box_x[i])
+    box_y = [Box(40,42*(i+2)) for i in range(11)]+[Box(600,42*(i+2))for i in range(10)]
+    for i in range(21):
         game_world.add_object(box_y[i], 1)
-
 
     global bubble_destroy
     bubble_destroy=Bubble_destroy()
@@ -97,8 +94,17 @@ def update():
    for game_object in game_world.all_objects():
         game_object.update()
 
-   #if collide(boy,bubble_destroy):
-    #  game_world.remove_object(boy)
+   if collide(boy,bubble_destroy):
+      game_world.remove_object(boy)
+
+   for i in range(30):
+    if collide(boy,box_x[i]):
+      game_world.remove_object(box_x)
+      print("Collision")
+   for i in range(21):
+       if collide(boy,box_y[i]):
+           game_world.remove_object(box_y)
+           print("collision")
 
 
 def draw():

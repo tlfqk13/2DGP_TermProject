@@ -25,8 +25,21 @@ class Bubble:
     def update(self):
         self.timer-=1
         if (self.timer==0):
-          bubble_destroy.Bubble_destroy.draw(self)
           game_world.remove_object(self)
+
+
+
+
+
+
+class Bubble_pang(Bubble):
+    def __init__(self):
+      if Bubble_pang.image==None:
+        Bubble_pang.image=load_image('padoexLeft.png')
+        self.x,self.y
+
+    def get_bb(self):
+        return self.x-60,self.y-25,self.x+60,self.y+25
 
 
 
