@@ -5,15 +5,19 @@ import os
 from pico2d import *
 
 import game_framework
-#import title_state
-#import pause_state
+import title_state
+import pause_state
 import game_world
 
 from boy import Boy
+from girl import Girl
 from map import Map
 from box import Box
 from bubble import Bubble
 from item import Item
+from boss import Boss
+from boy_death import Death
+
 from Cookiet_Map import Stage
 
 from bubble_destroy import Bubble_destroy
@@ -36,9 +40,17 @@ def enter():
     boy=Boy()
     game_world.add_object(boy, 1)
 
+    global girl
+    girl=Girl()
+    #game_world.add_object(girl,2)
+
     #global stage
     #stage=Stage()
     #game_world.add_object(stage,0)
+
+    global boss
+    boss=Boss()
+    #game_world.add_object(boss,1)
 
     global map
     map=Map()
@@ -51,14 +63,24 @@ def enter():
     for i in range(10):
      game_world.add_object(bubbles[i],1)
 
+    global deaths
+    deaths=Death()
+    game_world.add_object(deaths,1)
+
     ## bulid box !!##
-    global box_x,box_y
+    global box_x,box_y,box_center_x,box_center_y
     box_x=[Box(40*(i+1),55) for i in range(15)]+[Box(40*(i+1),540) for i in range(15)]
     for i in range(30):
         game_world.add_object(box_x[i],1)
     box_y = [Box(40,42*(i+2)) for i in range(11)]+[Box(600,42*(i+2))for i in range(10)]
     for i in range(21):
         game_world.add_object(box_y[i], 1)
+    box_center_x=[Box(40*(i+3),275)for i in range(5)]+[Box(40*(i+3),125)for i in range(5)]
+    box_center_y=[Box(120,42*(i+3)) for i in range(4)]+[Box(280,42*(i+3))for i in range(4)]
+    for i in range(10):
+        game_world.add_object(box_center_x[i],1)
+    for i in range(8):
+        game_world.add_object(box_center_y[i],1)
 
     global bubble_destroy
     bubble_destroy=Bubble_destroy()
@@ -85,7 +107,10 @@ def handle_events():
             #game_framework.change_state(title_state)
         #elif (event.type,event.key)==(SDL_KEYDOWN,SDLK_p):
             #game_framework.push_state(pause_state)
-
+        elif (event.type,event.key)==(SDL_KEYDOWN,SDLK_SPACE):
+            game_framework.change_state(title_state)
+        elif (event.type,event.key)==(SDL_KEYDOWN,SDLK_p):
+            game_framework.push_state(pause_state)
         else:
             boy.handle_event(event)
 

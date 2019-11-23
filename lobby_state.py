@@ -31,7 +31,7 @@ def enter():
     background=o.object('select.png')
 
     oList.append(button('mao.png', 300, 180))
-    oList.append(button('dao.png', 300, 350))
+    oList.append(button('dao.png', 320, 240))
     #oList.append(button('pre_char_s.png',135,150))
     #oList.append(button('pre_char_s.png',300,150))
 

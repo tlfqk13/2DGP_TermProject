@@ -4,157 +4,158 @@ from bubble import Bubble
 
 import game_world
 
-# Boy Event
+# girl Event
 RIGHT_DOWN,LEFT_DOWN,RIGHT_UP,LEFT_UP,UP_UP,DOWN_DOWN,UP_DOWN,DOWN_UP,\
     DASH_LDOWN,DASH_LUP,DASH_RDOWN,DASH_RUP,\
-    LCTRL=range(13)
+    RCTRL=range(13)
+
 
 key_event_table={
-    (SDL_KEYDOWN,SDLK_RIGHT):RIGHT_DOWN,
-    (SDL_KEYDOWN,SDLK_LEFT):LEFT_DOWN,
-    (SDL_KEYUP,SDLK_RIGHT):RIGHT_UP,
-    (SDL_KEYUP,SDLK_LEFT):LEFT_UP,
+    (SDL_KEYDOWN,SDLK_d):RIGHT_DOWN,
+    (SDL_KEYDOWN,SDLK_a):LEFT_DOWN,
+    (SDL_KEYUP,SDLK_d):RIGHT_UP,
+    (SDL_KEYUP,SDLK_a):LEFT_UP,
     (SDL_KEYUP,SDLK_LSHIFT):DASH_LUP,
     (SDL_KEYDOWN,SDLK_LSHIFT):DASH_LDOWN,
     (SDL_KEYDOWN,SDLK_RSHIFT):DASH_RDOWN,
     (SDL_KEYUP,SDLK_RSHIFT):DASH_RUP,
-    (SDL_KEYUP,SDLK_UP):UP_UP,
-    (SDL_KEYDOWN,SDLK_UP):UP_DOWN,
-    (SDL_KEYDOWN,SDLK_DOWN):DOWN_DOWN,
-    (SDL_KEYUP,SDLK_DOWN):DOWN_UP,
-    (SDL_KEYDOWN,SDLK_RCTRL):LCTRL
+    (SDL_KEYUP,SDLK_w):UP_UP,
+    (SDL_KEYDOWN,SDLK_w):UP_DOWN,
+    (SDL_KEYDOWN,SDLK_s):DOWN_DOWN,
+    (SDL_KEYUP,SDLK_s):DOWN_UP,
+    (SDL_KEYDOWN,SDLK_RCTRL):RCTRL
 }
 
-# Boy States
+# girl States
 class IdleState:
     @staticmethod
-    def enter(boy,event):
+    def enter(girl,event):
         if event ==RIGHT_DOWN:
-            boy.velocity+=1
+            girl.velocity+=1
         elif event==LEFT_DOWN:
-            boy.velocity-=1
+            girl.velocity-=1
         elif event==RIGHT_UP:
-            boy.velocity-=1
+            girl.velocity-=1
         elif event==LEFT_UP:
-            boy.velocity+=1
+            girl.velocity+=1
         if event ==UP_DOWN:
-            boy.y_velocity+=1
+            girl.y_velocity+=1
         elif event==DOWN_DOWN:
-            boy.y_velocity-=1
+            girl.y_velocity-=1
         elif event==UP_UP:
-            boy.y_velocity-=1
+            girl.y_velocity-=1
         elif event==DOWN_UP:
-            boy.y_velocity+=1
-        boy.timer=4
+            girl.y_velocity+=1
+        girl.timer=4
     @staticmethod
-    def exit(boy,event):
-        if event==LCTRL:
-            boy.Bubble()
-            #boy.Bubble_destroy()
+    def exit(girl,event):
+        if event==RCTRL:
+            girl.Bubble()
+            #girl.Bubble_destroy()
     @staticmethod
-    def do(boy):
-        boy.frame=(boy.frame+1)%8
-        boy.timer-=1
-        #if boy.timer==0:
-            #boy.add_event(SLEEP_TIMER)
+    def do(girl):
+        girl.frame=(girl.frame+1)%8
+        girl.timer-=1
+        #if girl.timer==0:
+            #girl.add_event(SLEEP_TIMER)
     @staticmethod
-    def draw(boy):
-        if boy.dir==1:
-            boy.R_image.clip_draw(boy.frame * 44, 0, 44, 62, boy.x, boy.y)
+    def draw(girl):
+        if girl.dir==1:
+            girl.R_image.clip_draw(girl.frame * 44, 0, 44, 62, girl.x, girl.y)
         else:
-            boy.L_image.clip_draw(boy.frame * 44, 0, 44, 62, boy.x, boy.y)
+            girl.L_image.clip_draw(girl.frame * 44, 0, 44, 62, girl.x, girl.y)
 # fill here
 class RunState:
     @staticmethod
-    def enter(boy, event):
+    def enter(girl, event):
         if event == RIGHT_DOWN:
-            boy.velocity += 1
+            girl.velocity += 1
         elif event == LEFT_DOWN:
-            boy.velocity -= 1
+            girl.velocity -= 1
         elif event == RIGHT_UP:
-            boy.velocity -= 1
+            girl.velocity -= 1
         elif event == LEFT_UP:
-            boy.velocity += 1
+            girl.velocity += 1
         elif event == UP_DOWN:
-                boy.y_velocity += 1
+                girl.y_velocity += 1
         elif event == DOWN_DOWN:
-                boy.y_velocity -= 1
+                girl.y_velocity -= 1
         elif event == UP_UP:
-                boy.y_velocity -= 1
+                girl.y_velocity -= 1
         elif event == DOWN_UP:
-                boy.y_velocity += 1
+                girl.y_velocity += 1
 
-        boy.dir = boy.velocity
-        boy.y_dir= boy.y_velocity
+        girl.dir = girl.velocity
+        girl.y_dir= girl.y_velocity
 
     @staticmethod
-    def exit(boy, event):
-        if event==LCTRL:
-            boy.Bubble()
+    def exit(girl, event):
+        if event==RCTRL:
+            girl.Bubble()
 
         pass
     @staticmethod
-    def do(boy):
-        boy.frame = (boy.frame + 1) % 8
-        boy.timer -= 1
-        boy.x += boy.velocity
-        boy.x = clamp(25, boy.x, 800 - 25)
-        boy.y+= boy.y_velocity
-        boy.y = clamp(25, boy.y, 600 - 25)
+    def do(girl):
+        girl.frame = (girl.frame + 1) % 8
+        girl.timer -= 1
+        girl.x += girl.velocity
+        girl.x = clamp(25, girl.x, 800 - 25)
+        girl.y+= girl.y_velocity
+        girl.y = clamp(25, girl.y, 600 - 25)
     @staticmethod
-    def draw(boy):
-        if boy.velocity == 1:
-            boy.R_image.clip_draw(boy.frame * 44, 0, 44, 62, boy.x, boy.y)
+    def draw(girl):
+        if girl.velocity == 1:
+            girl.R_image.clip_draw(girl.frame * 44, 0, 44, 62, girl.x, girl.y)
         else:
-            boy.L_image.clip_draw(boy.frame * 44, 0, 44, 62, boy.x, boy.y)
+            girl.L_image.clip_draw(girl.frame * 44, 0, 44, 62, girl.x, girl.y)
 
-        if boy.y_velocity==1:
-           boy.Up_image.clip_draw(boy.frame * 44, 0, 44, 62, boy.x, boy.y)
-        elif boy.y_velocity==-1 or 0:
-            boy.Down_image.clip_draw(boy.frame * 44, 0, 44, 62, boy.x, boy.y)
+        if girl.y_velocity==1:
+           girl.Up_image.clip_draw(girl.frame * 44, 0, 44, 62, girl.x, girl.y)
+        elif girl.y_velocity==-1 or 0:
+            girl.Down_image.clip_draw(girl.frame * 44, 0, 44, 62, girl.x, girl.y)
 
 class DashState:
     @staticmethod
-    def enter(boy, event):
-        boy.frame=0
-        boy.time=0
-        boy.speed=5
+    def enter(girl,event):
+        girl.frame=0
+        girl.time=0
+        girl.speed=5
     @staticmethod
-    def exit(boy, event):
+    def exit(girl, event):
         pass
     @staticmethod
-    def do(boy):
-        boy.frame = (boy.frame + 1) % 8
-        boy.time=(boy.time+1)%75
-        if boy.time==0:
-            boy.speed=1
-        boy.x+=boy.velocity*boy.speed
-        boy.x = clamp(25, boy.x, 800 - 25)
+    def do(girl):
+        girl.frame = (girl.frame + 1) % 8
+        girl.time=(girl.time+1)%75
+        if girl.time==0:
+            girl.speed=1
+        girl.x+=girl.velocity*girl.speed
+        girl.x = clamp(25, girl.x, 800 - 25)
     @staticmethod
-    def draw(boy):
-        if boy.velocity == 1:
-            boy.R_image.clip_draw(boy.frame * 44, 0, 44, 62, boy.x, boy.y)
+    def draw(girl):
+        if girl.velocity == 1:
+            girl.R_image.clip_draw(girl.frame * 44, 0, 44, 62, girl.x, girl.y)
         else:
-            boy.L_image.clip_draw(boy.frame * 44, 0, 44, 62, boy.x, boy.y)
+            girl.L_image.clip_draw(girl.frame * 44, 0, 44, 62, girl.x, girl.y)
      #SLEEP_TIMER: SleepState
 next_state_table = {
     IdleState: {RIGHT_UP: RunState, LEFT_UP: RunState, RIGHT_DOWN: RunState, LEFT_DOWN: RunState,
                 UP_DOWN:RunState,UP_UP:RunState,DOWN_DOWN:RunState,DOWN_UP:RunState,
                 DASH_RDOWN: IdleState, DASH_RUP: IdleState,
                 DASH_LDOWN: RunState, DASH_LUP: RunState,
-                LCTRL:IdleState},
+                RCTRL:IdleState},
     RunState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState,
                UP_DOWN: IdleState, UP_UP: IdleState, DOWN_DOWN: IdleState, DOWN_UP: IdleState,
                DASH_RDOWN: DashState, DASH_RUP: RunState, DASH_LDOWN: DashState, DASH_LUP: RunState,
-               LCTRL:RunState},
+               RCTRL:RunState},
     DashState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState,
                 DASH_RDOWN: RunState, DASH_RUP: RunState, DASH_LDOWN: RunState, DASH_LUP: RunState,
-                LCTRL:IdleState},
+                RCTRL:IdleState},
    # SleepState: {RIGHT_UP: RunState, LEFT_UP: RunState, RIGHT_DOWN: RunState, LEFT_DOWN: RunState, }
 }
 
 
-class Boy:
+class Girl:
 
     def __init__(self):
         self.x, self.y = 800 // 2,250
