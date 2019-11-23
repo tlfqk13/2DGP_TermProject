@@ -19,7 +19,10 @@ class object:
     def draw(self):
         self.image.draw(self.x, self.y, self.imageWidth, self.imageHeight)
     def clip_draw(self):
-        self.image.clip_draw(self.left,self.bottom,self.clipWidth, self.clipHeight, self.x, self.y, self.imageWidth, self.imageHeight)
+        self.image.clip_draw(self.left,self.bottom,
+                             self.clipWidth, self.clipHeight,
+                             self.x, self.y,
+                             self.imageWidth, self.imageHeight)
     def setPos(self, x, y):
         self.x = x
         self.y = y

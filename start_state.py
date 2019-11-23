@@ -24,7 +24,7 @@ def update():
         #game_framework.quit()
         game_framework.change_state(title_state)
     delay(0.01)
-    logo_time+=0.01
+    logo_time+=0.5
     pass
 
 def draw():

@@ -2,12 +2,9 @@ from pico2d import *
 import object as o
 import game_framework
 import main_state
-import lobby_state
 
-name = "TitleState"
+name = "Lobby_State"
 background = None
-char = None
-title = None
 oList = []
 
 class button(o.object):
@@ -16,8 +13,8 @@ class button(o.object):
         self.origin = origin
         self.future = future
     def overlapButton(self, x, y):
-        if self.x - self.imageWidth / 4 < x and self.x + self.imageWidth /4 > x and \
-            self.y - self.imageHeight / 4 < y and self.y + self.imageHeight /4 > y:
+        if self.x - self.imageWidth / 2 < x and self.x + self.imageWidth / 2 > x and \
+                self.y - self.imageHeight / 2 < y and self.y + self.imageHeight / 2 > y:
             self.changeClipFrame(0, self.future)
         else:
             self.bottom = self.origin
@@ -29,20 +26,32 @@ class button(o.object):
             return False
 
 def enter():
-    global background,char,title
+    global background,title
     title = o.object('start.png')
-    background=o.object('background.png')
-    oList.append(button('start.png', 163,155))
-    #oList.append(button('start.png', 300, 0))
+    background=o.object('select.png')
+
+    oList.append(button('mao.png', 300, 180))
+    oList.append(button('dao.png', 300, 350))
+    #oList.append(button('pre_char_s.png',135,150))
+    #oList.append(button('pre_char_s.png',300,150))
+
     background.setPos(400,300)
+    background.setSize(800,600)
     title.setPos(300,850)
 
-    oList[0].setPos(100, 200)
-    oList[0].setSize(100,100)
-    oList[0].setClipSize(163,155)
-    #oList[1].setPos(100, 50)
-    #oList[1].setSize(100, 100)
-    #oList[1].setClipSize(163, 155)
+    oList[0].setPos(130,360)
+    oList[0].setSize(180,180)
+    oList[0].setClipSize(300,180)
+
+    oList[1].setPos(320, 360)
+    oList[1].setSize(180, 180)
+    oList[1].setClipSize(300,240)
+    #oList[2].setPos(135, 150)
+    #oList[2].setSize(180, 180)
+    #oList[2].setClipSize(150, 240)
+    #oList[3].setPos(300, 150)
+    #oList[3].setSize(180, 180)
+    #oList[3].setClipSize(300,240)
 
 def exit():
     global background
@@ -61,25 +70,39 @@ def handle_events():
                 x = event.x
                 y = 600 - 1 - event.y
                 oList[0].overlapButton(x,y)
-                #oList[1].overlapButton(x,y)
+                oList[1].overlapButton(x,y)
+                #oList[2].overlapButton(x, y)
+                #oList[3].overlapButton(x, y)
             if event.type == SDL_MOUSEBUTTONDOWN:
                 x = event.x
                 y = 600 - 1 - event.y
                 if oList[0].clickButton(x, y) is True:
-                    game_framework.change_state(lobby_state)
+                    game_framework.change_state(main_state)
                     break
-                #if oList[1].clickButton(x, y) is True:
-                 #   game_framework.quit()
+                if oList[1].clickButton(x, y) is True:
+                    game_framework.change_state(main_state)
+                    break
+                #if oList[2].clickButton(x, y) is True:
+                    #game_framework.change_state(main_state)
+                    #break
+                #if oList[3].clickButton(x, y) is True:
+                    #game_framework.change_state(main_state)
+                    #break
+
 
 def draw():
     clear_canvas()
     title.draw()
     background.draw()
 
+
+
     for i in range(len(oList)-2):
         oList[i].update()
     oList[0].clip_draw()
-#    oList[1].clip_draw()
+    oList[1].clip_draw()
+    #oList[2].clip_draw()
+    #oList[3].clip_draw()
     update_canvas()
 
 def update():
