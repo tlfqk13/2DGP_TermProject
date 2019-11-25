@@ -3,6 +3,7 @@ from pico2d import *
 import game_world
 import game_framework
 from bubble_destroy import Bubble_destroy
+from boy_death import Death
 #from boy import Boy
 
 class Bubble:
@@ -40,15 +41,24 @@ class Bubble:
           game_world.add_object(bubble_destroys,4)
           bubble_destroysList=game_world.get_layer(4)
           boyList=game_world.get_layer(1)
-          length=len(bubble_destroysList)
-          print(length)
-          for i in range(length):
-           if self.collide(boyList[1],bubble_destroysList[i]):
-               print("collision")
+          boxList=game_world.get_layer(5)
+
+          for i in range(len(bubble_destroysList)):
+           if self.collide(boyList[0],bubble_destroysList[i]):
+               print("collision1")
                game_world.remove_object(bubble_destroysList[i])
+               global bubble_death
+               bubble_death=Death(self.x,self.y)
+               game_world.add_object(bubble_death,6)
+               game_world.remove_object(boyList[0])
+               break
 
-
-
+          for i in range(len(boxList)):
+           game_world.add_object(bubble_destroys, 4)
+           if self.collide(bubble_destroysList[0],boxList[i]) :
+                print("collsion2")
+                game_world.remove_object(boxList[i])
+                break
 
 
 

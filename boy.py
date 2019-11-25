@@ -221,4 +221,7 @@ class Boy:
 
 
     def stop(self):
-        self.velocity=0
+         self.velocity=0
+
+         if(self.dir==1):
+             self.velocity=1

@@ -14,7 +14,7 @@ class Bubble_destroy:
 
 
     def get_bb(self):
-        return self.x - 30, self.y - 30, self.x + 30, self.y + 30
+        return self.x - 65, self.y - 10, self.x + 65, self.y + 10
 
     def draw(self):
         self.image.draw(self.x, self.y)

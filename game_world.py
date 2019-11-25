@@ -2,9 +2,12 @@
 # layer 0: Background Objects
 # layer 1: character
 # layer 2 : Bubble
-# layer 3 : item
+# layer 3 : item, wall
 # layer 4 : Bubble_destroy
-objects = [[],[],[],[],[]]
+# layer 5 :  box
+# layer 6 : bubble_death
+
+objects = [[],[],[],[],[],[],[]]
 
 def add_object(o, layer):
     objects[layer].append(o)

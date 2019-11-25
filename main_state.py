@@ -37,14 +37,6 @@ def enter():
     boy=Boy()
     game_world.add_object(boy, 1)
 
-    #global girl
-    #girl=Girl()
-    #game_world.add_object(girl,2)
-
-    #global stage
-    #stage=Stage()
-    #game_world.add_object(stage,0)
-
     global boss
     boss=Boss()
     #game_world.add_object(boss,1)
@@ -57,16 +49,18 @@ def enter():
     global box_x,box_y,box_center_x,box_center_y
     box_x=[Box(40*(i+1),55) for i in range(15)]+[Box(40*(i+1),540) for i in range(15)]
     for i in range(30):
-        game_world.add_object(box_x[i],1)
+        game_world.add_object(box_x[i],5)
     box_y = [Box(40,42*(i+2)) for i in range(11)]+[Box(600,42*(i+2))for i in range(10)]
     for i in range(21):
-        game_world.add_object(box_y[i], 1)
+        game_world.add_object(box_y[i], 5)
     box_center_x=[Box(40*(i+3),275)for i in range(5)]+[Box(40*(i+3),125)for i in range(5)]
     box_center_y=[Box(120,42*(i+3)) for i in range(4)]+[Box(280,42*(i+3))for i in range(4)]
     for i in range(10):
-        game_world.add_object(box_center_x[i],1)
+        game_world.add_object(box_center_x[i],5)
     for i in range(8):
-        game_world.add_object(box_center_y[i],1)
+        game_world.add_object(box_center_y[i],5)
+
+
 
     global item
     item=[Item() for i in range(3)]
@@ -101,17 +95,29 @@ def update():
    for game_object in game_world.all_objects():
         game_object.update()
 
-   #boxList=game_world.get_layer(1)
+   boxList=game_world.get_layer(5)
    itemList=game_world.get_layer(3)
-   length = len(itemList)
-   #print(length)
-   for i in range(length):
+
+   for i in range(len(itemList)):
        if collide(boy,itemList[i]):
         boy.x+=boy.velocity*boy.boyspeed
         game_world.remove_object(itemList[i])
-
         break
 
+   for i in range(len(boxList)):
+       if collide(boy,boxList[i]):
+        print("collide")
+        boy.stop()
+        break
+
+
+
+
+def WallCollide():
+    global walls,boy
+    for wall in walls:
+        if collide(wall,boy):
+            boy.stop()
 
 
 def draw():

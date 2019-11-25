@@ -1,14 +1,15 @@
 
 from pico2d import *
+import game_world
 
 class Death:
     image=None
     b_image=None
-    def __init__(self):
+    def __init__(self,x=400,y=300):
       self.frame=0
-      self.image = load_image('Characbub0.png')
+      self.image = load_image('resource/Characbub0.png')
       self.timer=200
-      self.x,self.y=400,300
+      self.x,self.y=x,y
     def get_bb(self):
         return self.x-30,self.y-30,self.x+30,self.y+30
     def draw(self):
@@ -17,7 +18,9 @@ class Death:
         draw_rectangle(*self.get_bb())
 
     def update(self):
-       pass
+        self.timer -= 1
+        if (self.timer == 0):
+            game_world.remove_object(self)
 
 
 
