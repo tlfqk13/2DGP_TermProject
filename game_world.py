@@ -1,9 +1,10 @@
 
 # layer 0: Background Objects
-# layer 1: Foreground Objects
-# layer 2
-objects = [[],[],[]]
-
+# layer 1: character
+# layer 2 : Bubble
+# layer 3 : item
+# layer 4 : Bubble_destroy
+objects = [[],[],[],[],[]]
 
 def add_object(o, layer):
     objects[layer].append(o)
@@ -11,9 +12,8 @@ def add_object(o, layer):
 def add_objects(l, layer):
     objects[layer] += l
 
-def add_objectss(u,layer):
-    objects[layer].append(u)
-
+def get_layer(layer):
+    return objects[layer]
 
 def remove_object(o):
     for i in range(len(objects)):
@@ -21,7 +21,6 @@ def remove_object(o):
             objects[i].remove(o)
             del o
             break
-
 
 def clear():
     for o in all_objects():

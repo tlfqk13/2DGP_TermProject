@@ -40,8 +40,8 @@ def enter():
     boy=Boy()
     game_world.add_object(boy, 1)
 
-    global girl
-    girl=Girl()
+    #global girl
+    #girl=Girl()
     #game_world.add_object(girl,2)
 
     #global stage
@@ -55,17 +55,6 @@ def enter():
     global map
     map=Map()
     game_world.add_object(map,0)
-
-    global bubbles
-    #bubbles=Bubble()
-    #game_world.add_object(bubbles,1)
-    bubbles= [Bubble() for i in range(10)]
-    for i in range(10):
-     game_world.add_object(bubbles[i],1)
-
-    global deaths
-    deaths=Death()
-    game_world.add_object(deaths,1)
 
     ## bulid box !!##
     global box_x,box_y,box_center_x,box_center_y
@@ -82,13 +71,10 @@ def enter():
     for i in range(8):
         game_world.add_object(box_center_y[i],1)
 
-    global bubble_destroy
-    bubble_destroy=Bubble_destroy()
-    game_world.add_object(bubble_destroy,1)
-
     global item
-    item=[Item() for i in range(10)]
-    game_world.add_objects(item,1)
+    item=[Item() for i in range(3)]
+    game_world.add_objects(item,3)
+
 
 
 def exit():
@@ -118,17 +104,18 @@ def update():
    for game_object in game_world.all_objects():
         game_object.update()
 
-   if collide(boy,bubble_destroy):
-      game_world.remove_object(boy)
+   #boxList=game_world.get_layer(1)
+   itemList=game_world.get_layer(3)
+   length = len(itemList)
+   #print(length)
+   for i in range(length):
+       if collide(boy,itemList[i]):
+        boy.x+=boy.velocity*boy.boyspeed
+        game_world.remove_object(itemList[i])
 
-   for i in range(30):
-    if collide(boy,box_x[i]):
-      game_world.remove_object(box_x)
-      print("Collision")
-   for i in range(21):
-       if collide(boy,box_y[i]):
-           game_world.remove_object(box_y)
-           print("collision")
+        break
+
+
 
 def draw():
     clear_canvas()

@@ -7,7 +7,7 @@ import game_world
 # Boy Event
 RIGHT_DOWN,LEFT_DOWN,RIGHT_UP,LEFT_UP,UP_UP,DOWN_DOWN,UP_DOWN,DOWN_UP,\
     DASH_LDOWN,DASH_LUP,DASH_RDOWN,DASH_RUP,\
-    LCTRL=range(13)
+    KEY_BUBBLE=range(13)
 
 key_event_table={
     (SDL_KEYDOWN,SDLK_RIGHT):RIGHT_DOWN,
@@ -22,7 +22,7 @@ key_event_table={
     (SDL_KEYDOWN,SDLK_UP):UP_DOWN,
     (SDL_KEYDOWN,SDLK_DOWN):DOWN_DOWN,
     (SDL_KEYUP,SDLK_DOWN):DOWN_UP,
-    (SDL_KEYDOWN,SDLK_RCTRL):LCTRL
+    (SDL_KEYDOWN,SDLK_m):KEY_BUBBLE
 }
 
 # Boy States
@@ -48,7 +48,7 @@ class IdleState:
         boy.timer=4
     @staticmethod
     def exit(boy,event):
-        if event==LCTRL:
+        if event==KEY_BUBBLE:
             boy.Bubble()
             #boy.Bubble_destroy()
     @staticmethod
@@ -89,7 +89,7 @@ class RunState:
 
     @staticmethod
     def exit(boy, event):
-        if event==LCTRL:
+        if event==KEY_BUBBLE:
             boy.Bubble()
 
         pass
@@ -142,14 +142,14 @@ next_state_table = {
                 UP_DOWN:RunState,UP_UP:RunState,DOWN_DOWN:RunState,DOWN_UP:RunState,
                 DASH_RDOWN: IdleState, DASH_RUP: IdleState,
                 DASH_LDOWN: RunState, DASH_LUP: RunState,
-                LCTRL:IdleState},
+                KEY_BUBBLE:IdleState},
     RunState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState,
                UP_DOWN: IdleState, UP_UP: IdleState, DOWN_DOWN: IdleState, DOWN_UP: IdleState,
                DASH_RDOWN: DashState, DASH_RUP: RunState, DASH_LDOWN: DashState, DASH_LUP: RunState,
-               LCTRL:RunState},
+               KEY_BUBBLE:RunState},
     DashState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState,
                 DASH_RDOWN: RunState, DASH_RUP: RunState, DASH_LDOWN: RunState, DASH_LUP: RunState,
-                LCTRL:IdleState},
+                KEY_BUBBLE:IdleState},
    # SleepState: {RIGHT_UP: RunState, LEFT_UP: RunState, RIGHT_DOWN: RunState, LEFT_DOWN: RunState, }
 }
 
@@ -170,17 +170,27 @@ class Boy:
         self.y_velocity=0
         self.frame=0
         self.timer=0
+        self.boyspeed=1
         self.event_que=[]
         self.cur_state=IdleState
         self.cur_state.enter(self,None)
 
+    def collide(a, b):
+        left_a, bottom_a, right_a, top_a = a.get_bb()
+        left_b, bottom_b, right_b, top_b = b.get_bb()
+        if left_a > right_b: return False
+        if right_a < left_b: return False
+        if top_a < bottom_b: return False
+        if bottom_a > top_b: return False
+        return True
 
     def get_bb(self):
         return self.x-30,self.y-30,self.x+30,self.y+30
 
     def Bubble(self):
         bubble=Bubble(self.x,self.y)
-        game_world.add_object(bubble,1)
+        game_world.add_object(bubble,2)
+
 
     def add_event(self, event):
         self.event_que.insert(0,event)
@@ -193,7 +203,9 @@ class Boy:
             self.cur_state.exit(self, event)
             self.cur_state = next_state_table[self.cur_state][event]
             self.cur_state.enter(self, event)
-        pass
+
+    def get_boy(self):
+        return object[1]
 
 
     def draw(self):

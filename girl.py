@@ -30,9 +30,9 @@ key_event_table={
 class IdleState:
     @staticmethod
     def enter(girl,event):
-        if event ==RIGHT_DOWN:
+        if event == RIGHT_DOWN:
             girl.velocity+=1
-        elif event==LEFT_DOWN:
+        elif event == LEFT_DOWN:
             girl.velocity-=1
         elif event==RIGHT_UP:
             girl.velocity-=1
