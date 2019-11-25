@@ -7,7 +7,7 @@ class Bubble_destroy:
 
     def __init__(self, x=400, y=300):
         self.frame = 0
-        self.image = load_image('padoexLeft.png')
+        self.image = load_image('resource/padoexLeft.png')
         self.x, self.y = x, y
         self.timer = 200
 

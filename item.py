@@ -6,9 +6,9 @@ from boy import Boy
 
 class Item:
     def __init__(self):
-        self.image_1 = load_image('item_64.png')
-        self.image_2=load_image('item_038.png')
-        self.image_3=load_image('item_065.png')
+        self.image_1 = load_image('resource/item_64.png')
+        self.image_2=load_image('resource/item_038.png')
+        self.image_3=load_image('resource/item_065.png')
         self.x,self.y=random.randint(200,500),random.randint(200,500)
         self.timer=300
     def get_bb(self):

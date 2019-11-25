@@ -30,9 +30,9 @@ class button(o.object):
 
 def enter():
     global background,char,title
-    title = o.object('start.png')
-    background=o.object('background.png')
-    oList.append(button('start.png', 163,155))
+    title = o.object('resource/start.png')
+    background=o.object('resource/background.png')
+    oList.append(button('resource/start.png', 163,155))
     #oList.append(button('start.png', 300, 0))
     background.setPos(400,300)
     title.setPos(300,850)

@@ -1,4 +1,4 @@
-import pico2d
+from pico2d import *
 
 class object:
     def __init__(self, imageString = None):

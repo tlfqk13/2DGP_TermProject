@@ -11,7 +11,7 @@ class Bubble:
 
     def __init__(self,x=0,y=0):
       self.frame=0
-      self.image = load_image('bubble_116.png')
+      self.image = load_image('resource/bubble_116.png')
       self.x,self.y=x,y
       self.timer=200
 

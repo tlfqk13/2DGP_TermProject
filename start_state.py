@@ -9,7 +9,7 @@ logo_time = 0.0
 
 def enter():
     global image
-    image=load_image('kpu_credit.png')
+    image=load_image('resource/kpu_credit.png')
     pass
 
 def exit():
@@ -40,7 +40,7 @@ def handle_events():
 
 def pause():
     global image
-    image = load_image('ui_mainexit.png')
+    image = load_image('resource/ui_mainexit.png')
     pass
 
 

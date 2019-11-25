@@ -27,11 +27,11 @@ class button(o.object):
 
 def enter():
     global background,title
-    title = o.object('start.png')
-    background=o.object('select.png')
+    title = o.object('resource/start.png')
+    background=o.object('resource/select.png')
 
-    oList.append(button('mao.png', 300, 180))
-    oList.append(button('dao.png', 320, 240))
+    oList.append(button('resource/mao.png', 300, 180))
+    oList.append(button('resource/dao.png', 320, 240))
     #oList.append(button('pre_char_s.png',135,150))
     #oList.append(button('pre_char_s.png',300,150))
 

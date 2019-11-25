@@ -4,7 +4,7 @@ class Boss:
 
     def __init__(self):
         self.frame = 0
-        self.image = load_image('boss_fire.png')
+        self.image = load_image('resource/boss_fire.png')
         self.x, self.y = 400,300
 
     def get_bb(self):

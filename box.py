@@ -7,7 +7,7 @@ class Box:
     image=None
     def __init__(self,x,y):
      if Box.image==None:
-         Box.image = load_image('pirate_object_08.png')
+         Box.image = load_image('resource/pirate_object_08.png')
      self.x,self.y=x,y
 
     def get_bb(self):

@@ -9,7 +9,7 @@ gameover = None
 
 def enter():
     global gameover
-    gameover = load_image('gameover_00.png')
+    gameover = load_image('resourece/gameover_00.png')
 
 def exit():
     global gameover
