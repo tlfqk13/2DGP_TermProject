@@ -5,20 +5,24 @@ import game_framework
 import title_state
 import pause_state
 import game_world
-import stage2
 
 from boy import Boy
 from girl import Girl
 from map import Map
 from box import Box
-from bubble import Bubble
+from game_start import Start
 from item import Item
 from boss import Boss
+from enemy_bubble import Enemy_bubble
 
+playtime=0.0
 name = "MainState"
 
 boy = None
 map=None
+
+#game play time
+Playtime=0.0
 
 def collide(a,b):
     left_a, bottom_a, right_a, top_a = a.get_bb()
@@ -30,13 +34,18 @@ def collide(a,b):
     return True
 
 def enter():
+
+    global Playtime
+    Playtime=get_time()
+
     global boy
     boy=Boy()
     game_world.add_object(boy, 1)
 
-    global boss
-    boss=Boss()
-    game_world.add_object(boss,1)
+    global enemy_bubbles
+    enemy_bubbles=[Enemy_bubble()for i in range (10)]
+    for i in range(10) :
+        game_world.add_object(enemy_bubbles[i],7)
 
     global map
     map=Map()
@@ -57,16 +66,19 @@ def enter():
     for i in range(8):
         game_world.add_object(box_center_y[i],5)
 
+    global boss
+    boss=Boss()
+    game_world.add_object(boss,1)
 
-    global item
-    item=[Item() for i in range(3)]
-    game_world.add_objects(item,3)
-
+    global start
+    start = Start()
+    game_world.add_object(start, 3)
 
 
 def exit():
+
     game_world.clear()
-    pass
+
 def pause():
     pass
 def resume():
@@ -84,17 +96,30 @@ def handle_events():
             game_framework.change_state(title_state)
         elif (event.type,event.key)==(SDL_KEYDOWN,SDLK_p):
             game_framework.push_state(pause_state)
-        elif (event.type,event.key)==(SDL_KEYDOWN,SDLK_n):
-            game_framework.change_state(stage2)
+        #elif (event.type,event.key)==(SDL_KEYDOWN,SDLK_e):
+            #game_framework.change_state()
         else:
             boy.handle_event(event)
 
 def update():
+
    for game_object in game_world.all_objects():
         game_object.update()
 
    boxList=game_world.get_layer(5)
    itemList=game_world.get_layer(3)
+   enemyList=game_world.get_layer(8)
+
+   #for i in range(len(enemyList)):
+       #game_world.remove_object(enemyList[i])
+
+   global Playtime
+   Playtime=get_time()
+   #print(Playtime)
+   #if (Playtime>=7):
+    #global items
+    #items=Item()
+    #game_world.add_object(items,3)
 
    for i in range(len(itemList)):
        if collide(boy,itemList[i]):
@@ -108,16 +133,6 @@ def update():
         print("box_collide")
         boy.stop()
         break
-
-
-
-
-
-def WallCollide():
-    global walls,boy
-    for wall in walls:
-        if collide(wall,boy):
-            boy.stop()
 
 
 def draw():

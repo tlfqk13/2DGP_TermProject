@@ -153,7 +153,7 @@ next_state_table = {
 class Boy:
 
     def __init__(self):
-        self.x, self.y = 800 // 2,250
+        self.x, self.y = 500,350
         self.L_image = load_image('resource/Left.png')
         self.R_image=load_image('resource/Right.png')
         self.Up_image=load_image('resource/Up.png')
@@ -203,6 +203,11 @@ class Boy:
     def get_boy(self):
         return object[1]
 
+    def get_boyX(self):
+        return self.x
+
+    def get_boyY(self):
+        return self.y
 
     def draw(self):
         self.cur_state.draw(self)

@@ -20,8 +20,8 @@ class Bubble_destroy:
 
     def update(self):
         self.timer -= 1
-        #if (self.timer == 0):
-         #   game_world.remove_object(self)
+        if (self.timer == 0):
+            game_world.remove_object(self)
 
 
 

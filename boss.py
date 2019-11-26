@@ -18,7 +18,7 @@ class Boss:
         self.frame = 0
         self.x, self.y = 360,400
         self.scaleX, self.scaleY = 300, 256
-        self.speed = 400
+        self.speed = 100
         self.radius = 128
         self.hp = 10000
         self.max_hp = self.hp
@@ -55,7 +55,7 @@ class Boss:
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
 
         # Move
-        if self.y >640:
+        if self.y >570:
             self.y -= self.speed * game_framework.frame_time
 
         # Hp Ratio
@@ -66,7 +66,7 @@ class Boss:
         # Create Bullet
         #self.CreateBullet()
 
-        if self.x>600:
+        if self.x>550:
             self.dir=-1
         if self.x<100:
             self.dir=1
@@ -84,16 +84,6 @@ class Boss:
         draw_rectangle(*self.get_bb())
         pass
 
-
-    def makeBullet(self):
-        global make_Bullet
-        global make_UpdateBullet
-
-        make_Bullet+=make_UpdateBullet
-
-        if make_Bullet>=make_UpdateBullet:
-            angle=mathmgr.CalcDegree(self,self.target)
-            angle+=random.randint(-5,5)
 
     def get_bb(self):
         return self.x - 100, self.y - 100, self.x + 100, self.y + 100

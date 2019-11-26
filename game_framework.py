@@ -1,3 +1,8 @@
+
+import time
+frame_time=0.0
+
+
 class GameState:
     def __init__(self, state):
         self.enter = state.enter
@@ -80,10 +85,6 @@ def pop_state():
 def quit():
     global running
     running = False
-
-
-
-import time
 
 frame_time = 0.0
 

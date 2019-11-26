@@ -30,16 +30,19 @@ class button(o.object):
 
 def enter():
     global background,char,title
-    title = o.object('resource/start.png')
+    title = o.object('resource/select03.png')
     background=o.object('resource/background.png')
-    oList.append(button('resource/start.png', 163,155))
+    oList.append(button('resource/select03.png', 278,125))
+
     #oList.append(button('start.png', 300, 0))
     background.setPos(400,300)
+    background.setSize(800,600)
     title.setPos(300,850)
+    title.setSize(278,252)
 
-    oList[0].setPos(100, 200)
+    oList[0].setPos(100, 150)
     oList[0].setSize(100,100)
-    oList[0].setClipSize(163,155)
+    oList[0].setClipSize(278,125)
     #oList[1].setPos(100, 50)
     #oList[1].setSize(100, 100)
     #oList[1].setClipSize(163, 155)
