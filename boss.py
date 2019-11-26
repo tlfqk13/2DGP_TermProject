@@ -64,7 +64,7 @@ class Boss:
 
         # Create Bullet
         #self.CreateBullet()
-        '''
+
         if self.x>550:
             self.dir=-1
         if self.x<100:
@@ -73,7 +73,7 @@ class Boss:
 
         return 0
         pass
-        '''
+
 
     def draw(self):
         if not self.IsDead:
