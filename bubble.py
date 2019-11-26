@@ -4,6 +4,8 @@ import game_world
 import game_framework
 from bubble_destroy import Bubble_destroy
 from boy_death import Death
+from boy_death_motion import Death_Motion
+
 #from boy import Boy
 
 class Bubble:
@@ -27,6 +29,7 @@ class Bubble:
 
     def get_bb(self):
         return self.x-30,self.y-30,self.x+30,self.y+30
+
     def draw(self):
         self.frame=(self.frame+1)%4
         self.image.clip_draw(self.frame*40,0,40,68,self.x,self.y)
@@ -46,20 +49,19 @@ class Bubble:
           for i in range(len(bubble_destroysList)):
            if self.collide(boyList[0],bubble_destroysList[i]):
                print("collision1")
-               game_world.remove_object(bubble_destroysList[i])
-               global bubble_death
-               bubble_death=Death(self.x,self.y)
-               game_world.add_object(bubble_death,6)
+               global boy_death
+               boy_death=Death(self.x,self.y)
+               game_world.add_object(boy_death,6)
                game_world.remove_object(boyList[0])
-               break
 
+          '''
           for i in range(len(boxList)):
-           game_world.add_object(bubble_destroys, 4)
+           #game_world.add_object(bubble_destroys,4)
            if self.collide(bubble_destroysList[0],boxList[i]) :
                 print("collsion2")
                 game_world.remove_object(boxList[i])
                 break
-
+            '''
 
 
 

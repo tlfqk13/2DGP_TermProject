@@ -159,10 +159,10 @@ class Girl:
 
     def __init__(self):
         self.x, self.y = 800 // 2,250
-        self.L_image = load_image('Left.png')
-        self.R_image=load_image('Right.png')
-        self.Up_image=load_image('Up.png')
-        self.Down_image=load_image('Down.png')
+        self.L_image = load_image('resource/Left.png')
+        self.R_image=load_image('resource/Right.png')
+        self.Up_image=load_image('resource/Up.png')
+        self.Down_image=load_image('resource/Down.png')
         self.font = load_font('ENCR10B.TTF', 16)
         self.dir = 1
         self.y_dir=1

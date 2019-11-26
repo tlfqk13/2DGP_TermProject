@@ -18,8 +18,8 @@ class Item:
         self.image_2.draw(self.x,self.y)
 
     def update(self):
-      self.timer-=1
-      if(self.timer==0):
-          game_world.remove_object(self)
+      #self.timer-=1
+      #if(self.timer==0):
+       #   game_world.remove_object(self)
 
       pass

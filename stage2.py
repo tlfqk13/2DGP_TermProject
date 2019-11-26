@@ -32,35 +32,35 @@ def collide(a,b):
 def enter():
     global boy
     boy=Boy()
-    game_world.add_object(boy, 1)
+    game_world.add_object2(boy, 1)
 
     global boss
     boss=Boss()
-    game_world.add_object(boss,1)
+    game_world.add_object2(boss,1)
 
     global map
     map=Map()
-    game_world.add_object(map,0)
+    game_world.add_object2(map,0)
 
     ## bulid box !!##
     global box_x,box_y,box_center_x,box_center_y
     box_x=[Box(40*(i+1),55) for i in range(15)]+[Box(40*(i+1),540) for i in range(15)]
     for i in range(30):
-        game_world.add_object(box_x[i],5)
+        game_world.add_object2(box_x[i],5)
     box_y = [Box(40,42*(i+2)) for i in range(11)]+[Box(600,42*(i+2))for i in range(10)]
     for i in range(21):
-        game_world.add_object(box_y[i], 5)
+        game_world.add_object2(box_y[i], 5)
     box_center_x=[Box(40*(i+3),275)for i in range(5)]+[Box(40*(i+3),125)for i in range(5)]
     box_center_y=[Box(120,42*(i+3)) for i in range(4)]+[Box(280,42*(i+3))for i in range(4)]
     for i in range(10):
-        game_world.add_object(box_center_x[i],5)
+        game_world.add_object2(box_center_x[i],5)
     for i in range(8):
-        game_world.add_object(box_center_y[i],5)
+        game_world.add_object2(box_center_y[i],5)
 
 
-    global item
-    item=[Item() for i in range(3)]
-    game_world.add_objects(item,3)
+    #global item
+    #tem=[Item() for i in range(3)]
+    #game_world.add_objects(item,3)
 
 
 
@@ -93,8 +93,8 @@ def update():
    for game_object in game_world.all_objects():
         game_object.update()
 
-   boxList=game_world.get_layer(5)
-   itemList=game_world.get_layer(3)
+   boxList=game_world.get_layer2(5)
+   itemList=game_world.get_layer2(3)
 
    for i in range(len(itemList)):
        if collide(boy,itemList[i]):

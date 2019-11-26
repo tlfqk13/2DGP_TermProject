@@ -7,7 +7,7 @@ import game_world
 # Boy Event
 RIGHT_DOWN,LEFT_DOWN,RIGHT_UP,LEFT_UP,UP_UP,DOWN_DOWN,UP_DOWN,DOWN_UP,\
     DASH_LDOWN,DASH_LUP,DASH_RDOWN,DASH_RUP,\
-    KEY_BUBBLE=range(13)
+    KEY_BUBBLE,KEY_ITEM=range(14)
 
 key_event_table={
     (SDL_KEYDOWN,SDLK_RIGHT):RIGHT_DOWN,
@@ -22,7 +22,8 @@ key_event_table={
     (SDL_KEYDOWN,SDLK_UP):UP_DOWN,
     (SDL_KEYDOWN,SDLK_DOWN):DOWN_DOWN,
     (SDL_KEYUP,SDLK_DOWN):DOWN_UP,
-    (SDL_KEYDOWN,SDLK_m):KEY_BUBBLE
+    (SDL_KEYDOWN,SDLK_m):KEY_BUBBLE,
+    (SDL_KEYDOWN,SDLK_n):KEY_ITEM
 }
 
 # Boy States
@@ -45,11 +46,13 @@ class IdleState:
             boy.y_velocity-=1
         elif event==DOWN_UP:
             boy.y_velocity+=1
-        boy.timer=4
+
     @staticmethod
     def exit(boy,event):
         if event==KEY_BUBBLE:
             boy.Bubble()
+        if event==KEY_ITEM:
+            pass
             #boy.Bubble_destroy()
     @staticmethod
     def do(boy):
@@ -116,20 +119,13 @@ class RunState:
 class DashState:
     @staticmethod
     def enter(boy, event):
-        boy.frame=0
-        boy.time=0
-        boy.speed=5
+       pass
     @staticmethod
     def exit(boy, event):
         pass
     @staticmethod
     def do(boy):
-        boy.frame = (boy.frame + 1) % 8
-        boy.time=(boy.time+1)%75
-        if boy.time==0:
-            boy.speed=1
-        boy.x+=boy.velocity*boy.speed
-        boy.x = clamp(25, boy.x, 800 - 25)
+      pass
     @staticmethod
     def draw(boy):
         if boy.velocity == 1:
@@ -168,9 +164,9 @@ class Boy:
         self.vector_y=250
         self.velocity = 0
         self.y_velocity=0
+        self.speed=1
         self.frame=0
         self.timer=0
-        self.boyspeed=1
         self.event_que=[]
         self.cur_state=IdleState
         self.cur_state.enter(self,None)
@@ -225,3 +221,6 @@ class Boy:
 
          if(self.dir==1):
              self.velocity=1
+
+    def boy_speed(self):
+        pass

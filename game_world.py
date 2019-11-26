@@ -6,11 +6,15 @@
 # layer 4 : Bubble_destroy
 # layer 5 :  box
 # layer 6 : bubble_death
+# layer 7 : bubble_death_motion
 
-objects = [[],[],[],[],[],[],[]]
+objects = [[],[],[],[],[],[],[],[]]
+object2=[[],[],[],[],[],[],[]]
 
 def add_object(o, layer):
     objects[layer].append(o)
+def add_objetct_stage2(o,layer):
+    object2[layer].append(o)
 
 def add_objects(l, layer):
     objects[layer] += l

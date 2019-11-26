@@ -11,8 +11,6 @@ class Bubble_destroy:
         self.x, self.y = x, y
         self.timer = 200
 
-
-
     def get_bb(self):
         return self.x - 65, self.y - 10, self.x + 65, self.y + 10
 
@@ -22,8 +20,8 @@ class Bubble_destroy:
 
     def update(self):
         self.timer -= 1
-        if (self.timer == 0):
-            game_world.remove_object(self)
+        #if (self.timer == 0):
+         #   game_world.remove_object(self)
 
 
 
