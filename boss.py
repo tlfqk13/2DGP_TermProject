@@ -1,8 +1,6 @@
 from pico2d import *
 import random
 import game_framework
-import mathmgr
-
 
 TIME_PER_ACTION = 0.2
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
@@ -24,6 +22,7 @@ class Boss:
         self.max_hp = self.hp
         self.exp = 1000
         self.dir=1
+        self.font=load_font('ENCR10B.TTF', 16)
 
         if Target is not None:
             self.target = Target
@@ -65,7 +64,7 @@ class Boss:
 
         # Create Bullet
         #self.CreateBullet()
-
+        '''
         if self.x>550:
             self.dir=-1
         if self.x<100:
@@ -74,16 +73,19 @@ class Boss:
 
         return 0
         pass
+        '''
 
     def draw(self):
         if not self.IsDead:
             self.image.clip_draw(int(self.frame) * 300, 0, 300, 256, self.x, self.y, self.scaleX, self.scaleY)
 
-            self.image_HpBarEmpty.clip_draw(0, 0, 116, 12, self.x, self.y - 140)
-            self.image_HpBar.clip_draw(0, 0, int(self.hpCX), self.hpCY, self.hpPosX, self.y - 140)
+            #self.image_HpBarEmpty.clip_draw(0, 0, 116, 12, self.x, self.y - 140)
+            #self.image_HpBar.clip_draw(0, 0, int(self.hpCX), self.hpCY, self.hpPosX, self.y - 140)
         draw_rectangle(*self.get_bb())
-        pass
+        self.font.draw(self.x-55,self.y+50, '(HP: %3.2f)' % self.hp, (255, 255, 0))
 
+    def get_hp(self):
+        return self.hp
 
     def get_bb(self):
         return self.x - 100, self.y - 100, self.x + 100, self.y + 100

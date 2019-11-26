@@ -20,7 +20,7 @@ class Enemy_bubble:
       self.image = load_image('resource/bubble_121.png')
       self.x,self.y=random.randint(100,600),random.randint(200,600)
 
-      self.timer=300
+      self.timer=400
       self.dir=1
       self.speed=random.randint(5,25)
 
@@ -42,20 +42,15 @@ class Enemy_bubble:
         return True
 
     def update(self):
-        if self.y >120:
-            self.y -= self.speed
+        if self.y >220:
+            self.y -= self.speed*0.1
 
-        if self.y<100:
-            pass
-
-        if self.x>550:
+        if self.x>600:
             self.dir=-1
         if self.x<100:
             self.dir=1
-        self.x+=self.dir*2
+        self.x+=self.dir*3
         #self.y-=self.dir*5
-
-
 
         self.timer-=1
         if (self.timer==0):

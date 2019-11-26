@@ -1,15 +1,13 @@
 from pico2d import *
 import random
 import game_world
-import game_framework
-from boy import Boy
 
 class Item:
-    def __init__(self):
+    def __init__(self,x=0,y=0):
         self.image_1 = load_image('resource/item_64.png')
         self.image_2=load_image('resource/item_038.png')
         self.image_3=load_image('resource/item_065.png')
-        self.x,self.y=random.randint(200,500),random.randint(200,500)
+        self.x,self.y=x,y
         self.timer=300
     def get_bb(self):
         return self.x-10,self.y-10,self.x+10,self.y+10

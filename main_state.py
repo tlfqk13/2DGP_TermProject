@@ -45,7 +45,7 @@ def enter():
     global enemy_bubbles
     enemy_bubbles=[Enemy_bubble()for i in range (10)]
     for i in range(10) :
-        game_world.add_object(enemy_bubbles[i],7)
+        game_world.add_object(enemy_bubbles[i],8)
 
     global map
     map=Map()
