@@ -1,0 +1,8 @@
+[
+  {"name": "Henderson", "x":  2, "y":   2, "size" : 0},
+  {"name": "mane"  , "x":  8, "y":   3, "size" : 0},
+  {"name": "Sala"  , "x": 30, "y":  20, "size" : 0},
+  {"name": "Robertson"  , "x": 10, "y":  30, "size" : 0},
+  {"name": "Origi"   , "x": 20, "y":  40, "size" :0}
+]
+

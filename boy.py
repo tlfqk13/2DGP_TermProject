@@ -63,9 +63,9 @@ class IdleState:
     @staticmethod
     def draw(boy):
         if boy.dir==1:
-            boy.R_image.clip_draw(boy.frame * 44, 0, 44, 62, boy.x, boy.y)
+            boy.R_image.clip_draw(boy.frame * 44, 0, 44, 52, boy.x, boy.y)
         else:
-            boy.L_image.clip_draw(boy.frame * 44, 0, 44, 62, boy.x, boy.y)
+            boy.L_image.clip_draw(boy.frame * 44, 0, 44, 52, boy.x, boy.y)
 # fill here
 class RunState:
     @staticmethod
@@ -107,14 +107,14 @@ class RunState:
     @staticmethod
     def draw(boy):
         if boy.velocity == 1:
-            boy.R_image.clip_draw(boy.frame * 44, 0, 44, 62, boy.x, boy.y)
+            boy.R_image.clip_draw(boy.frame * 44, 0, 44, 52, boy.x, boy.y)
         else:
-            boy.L_image.clip_draw(boy.frame * 44, 0, 44, 62, boy.x, boy.y)
+            boy.L_image.clip_draw(boy.frame * 44, 0, 44, 52, boy.x, boy.y)
 
         if boy.y_velocity==1:
-           boy.Up_image.clip_draw(boy.frame * 44, 0, 44, 62, boy.x, boy.y)
+           boy.Up_image.clip_draw(boy.frame * 44, 0, 44, 52, boy.x, boy.y)
         elif boy.y_velocity==-1 or 0:
-            boy.Down_image.clip_draw(boy.frame * 44, 0, 44, 62, boy.x, boy.y)
+            boy.Down_image.clip_draw(boy.frame * 44, 0, 44, 52, boy.x, boy.y)
 
 class DashState:
     @staticmethod
@@ -129,9 +129,9 @@ class DashState:
     @staticmethod
     def draw(boy):
         if boy.velocity == 1:
-            boy.R_image.clip_draw(boy.frame * 44, 0, 44, 62, boy.x, boy.y)
+            boy.R_image.clip_draw(boy.frame * 44, 0, 44, 52, boy.x, boy.y)
         else:
-            boy.L_image.clip_draw(boy.frame * 44, 0, 44, 62, boy.x, boy.y)
+            boy.L_image.clip_draw(boy.frame * 44, 0, 44, 52, boy.x, boy.y)
      #SLEEP_TIMER: SleepState
 next_state_table = {
     IdleState: {RIGHT_UP: RunState, LEFT_UP: RunState, RIGHT_DOWN: RunState, LEFT_DOWN: RunState,
@@ -170,6 +170,11 @@ class Boy:
         self.event_que=[]
         self.cur_state=IdleState
         self.cur_state.enter(self,None)
+
+    def __getstate__(self):
+        state = {'x' : self.x, 'y' : self.y, 'dir' : self.dir,
+                 'cur_state' : self.cur_state}
+        return state
 
     def collide(a, b):
         left_a, bottom_a, right_a, top_a = a.get_bb()

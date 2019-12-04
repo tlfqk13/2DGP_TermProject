@@ -11,7 +11,7 @@ TIME_PER_ACTION = 0.2
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 4
 
-class Enemy_bubble:
+class EnemyBubble:
     image=None
     b_image=None
 
@@ -43,7 +43,7 @@ class Enemy_bubble:
 
     def update(self):
         if self.y >220:
-            self.y -= self.speed*0.1
+            self.y -= self.speed*0.02
 
         if self.x>600:
             self.dir=-1
@@ -55,33 +55,18 @@ class Enemy_bubble:
         self.timer-=1
         if (self.timer==0):
           game_world.remove_object(self)
-          global bubble_destroys
-          bubble_destroys=Bubble_destroy(self.x,self.y)
-          game_world.add_object(bubble_destroys,4)
-          bubble_destroysList=game_world.get_layer(4)
+          global enemy_bubble_destroys
+          enemy_bubble_destroys=Bubble_destroy(self.x,self.y)
+          game_world.add_object(enemy_bubble_destroys,3)
+          enemy_bubble_destroysList=game_world.get_layer(3)
+          boyList = game_world.get_layer(3)
           game_world.remove_object(self)
-          boyList=game_world.get_layer(1)
-          boxList=game_world.get_layer(5)
 
 
-          for i in range(len(bubble_destroysList)):
-           if self.collide(boyList[0],bubble_destroysList[i]):
-               print("collision1")
-               global boy_death
-               boy_death=Death(self.x,self.y)
-               game_world.add_object(boy_death,6)
-               game_world.remove_object(boyList[0])
-
-          '''
-          for i in range(len(boxList)):
-           #game_world.add_object(bubble_destroys,4)
-           if self.collide(bubble_destroysList[0],boxList[i]) :
-                print("collsion2")
-                game_world.remove_object(boxList[i])
-                break
-
-'''
-
+          for i in range(len(enemy_bubble_destroysList)):
+              if self.collide(boyList[0],enemy_bubble_destroysList[i]) :
+                  print("collide_enemy")
+                  break
 
 
 

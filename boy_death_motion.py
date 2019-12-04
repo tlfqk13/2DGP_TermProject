@@ -2,7 +2,7 @@
 from pico2d import *
 import game_world
 
-from stage_clear import Clear
+
 
 class Death_Motion:
     image=None
