@@ -53,7 +53,8 @@ def enter():
 
     ## bulid box !!##
     global box_x,box_y,box_center_x,box_center_y
-    box_x=[Box(40*(i+1),55) for i in range(15)]+[Box(40*(i+1),540) for i in range(15)]
+    box_x=[Box(40*(i+1),55) for i in range(15)]\
+          +[Box(40*(i+1),540) for i in range(15)]
     for i in range(30):
         game_world.add_object(box_x[i],5)
     box_y = [Box(40,42*(i+2)) for i in range(11)]+[Box(600,42*(i+2))for i in range(10)]
