@@ -1,6 +1,7 @@
 from pico2d import *
 
 import game_world
+from boy_death import Death
 
 class Bubble_destroy:
     image=None
@@ -33,6 +34,7 @@ class Bubble_destroy:
         self.timer -= 1
         if self.timer == 0:
             game_world.remove_object(self)
+
 
 class enemyBubbleDestroy:
 

@@ -26,10 +26,6 @@ class Death_Motion:
         self.timer -= 1
         if (self.timer == 0):
             game_world.remove_object(self)
-            global clears
-            clears=Clear(self.x,self.y)
-            game_world.add_object(clears,3)
-
 
 
 

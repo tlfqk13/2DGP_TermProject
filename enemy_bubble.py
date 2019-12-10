@@ -15,7 +15,7 @@ class EnemyBubble:
     image=None
     b_image=None
 
-    def __init__(self):
+    def __init__(self,x,y):
       self.frame=0
       self.image = load_image('resource/bubble_121.png')
       self.x,self.y=random.randint(100,600),random.randint(200,600)

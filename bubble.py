@@ -1,7 +1,9 @@
 from pico2d import *
 
 import game_world
+import game_framework
 from bubble_destroy import Bubble_destroy
+from boy_death import Death
 
 TIME_PER_ACTION = 0.2
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
@@ -58,4 +60,4 @@ class Bubble :
                 if self.collide(boyList[0],bubble_destroyList[i]):
                     print("collsion1")
 
-
+                    game_world.remove_object(boyList[i])

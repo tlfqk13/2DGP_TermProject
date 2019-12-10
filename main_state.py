@@ -2,12 +2,16 @@
 from pico2d import *
 import game_framework
 import game_world
+import random
+import moster
 
 from boy import Boy
 from map import Map
 from staticbox import StaticBox,Box
 from enemy_bubble import EnemyBubble
+from bubble import Bubble
 from zombie import Zombie
+
 
 import world_build_state
 
@@ -15,6 +19,23 @@ boy = None
 map=None
 staticbox=None
 zombies=[]
+
+# Monster1 생성시간
+time_CreateMonster=10.0
+time_UpdateCreateMonster=10.0
+
+# Monster 생성 인자.
+Monster_Hp = 100
+Monster_Speed = 3
+Monster_Exp = 50
+
+#Monster 생성 위치
+posX=random.randint(75,750)
+posY=random.randint(75,550)
+posOffsetX=114
+
+#Game Play Time
+playTime=0.0
 
 def collide(a,b):
     left_a, bottom_a, right_a, top_a = a.get_bb()
@@ -52,22 +73,14 @@ def enter():
     for i in range(14):
         game_world.add_object(box[i], 5)
 
-    global enemy_bubbles
-    enemy_bubbles=[EnemyBubble()for i in range (10)]
-
-    for i in range(10) :
-        game_world.add_object(enemy_bubbles[i],8)
-
-
-
 def exit():
+    global playTime
+    global time_CreateMonster
 
+    playTime=0.0
+    time_CreateMonster=0.0
     game_world.clear()
 
-def pause():
-    pass
-def resume():
-    pass
 def handle_events():
     events=get_events()
     for event in events:
@@ -78,18 +91,55 @@ def handle_events():
 
 def update():
 
+   global playTime
+   playTime=get_time()
+   print(playTime)
+
    for game_object in game_world.all_objects():
         game_object.update()
 
    boxList=game_world.get_layer(5)
+   zombieList=game_world.get_layer(6)
 
    for i in range(len(boxList)):
        if collide(boy,boxList[i]):
            print("box_collide")
 
-   for zombie in zombies:
-       if collide(boy,zombie):
+
+   for i in range(len(zombieList)):
+       if collide(boy,zombieList[i]):
            print("zombie_collide")
+
+   global time_CreateMonster
+   global time_UpdateCreateMonster
+
+   global posX
+   global posY
+   global posOffsetX
+
+   global Monster_Hp
+   global Monster_Speed
+   global Monster_Exp
+
+   time_CreateMonster+=0.1
+
+   if time_CreateMonster>=time_UpdateCreateMonster:
+       print('make_monster')
+       for n in range(random.randint(0, 2 + 1), random.randint(3, 5 + 1)):
+           PosX = posX + posOffsetX * n
+           Monster_Hp = 100
+           Monster_Speed = 400
+           Monster_Exp = 50
+           # x, y, scaleX, scaleY, hp, speed, radius, exp, filename
+           GameObject = moster.CMonster(PosX,posY,
+                                        114,76,Monster_Hp,Monster_Speed,25,
+                                        Monster_Exp,"Enemy01.png")
+
+           game_world.add_object(GameObject,8)
+           pass
+
+
+       pass
 
 def draw():
     clear_canvas()
