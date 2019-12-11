@@ -5,7 +5,7 @@ import game_framework
 from bubble_destroy import Bubble_destroy
 from boy_death import Death
 from boy_death_motion import Death_Motion
-from boy import Boy
+from boy import CBoy
 
 TIME_PER_ACTION = 0.2
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION

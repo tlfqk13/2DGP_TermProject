@@ -79,6 +79,8 @@ class CMonster:
         self.hpPosX = self.x - (self.originCX - self.hpCX) / 2
 
         return 0
+
+
         pass
 
     def draw(self):

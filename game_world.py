@@ -1,4 +1,12 @@
+import collisionMgr
+import game_framework
 
+
+
+def all_objects():
+    for i in range(len(objects)):
+        for o in objects[i]:
+            yield o
 # layer 0: Background Objects
 # layer 1: character
 # layer 2 : Bubble
@@ -12,7 +20,7 @@
 objects = [[],[],[],[],[],[],[],[],[]]
 
 
-def add_object(o, layer):
+def add_gameobject(o, layer):
     objects[layer].append(o)
 
 def add_objects(l, layer):

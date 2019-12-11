@@ -5,7 +5,7 @@ import game_framework
 ObjLst = []
 
 # Object
-LstPlayerLaser = []
+LstMap = []
 LstPlayer = []
 LstPlayerPet = []
 LstPlayerBullet = []
@@ -15,10 +15,10 @@ LstItem = []
 LstEffect = []
 LstUI = []
 
-ObjLst.append(LstPlayerLaser)
+
 ObjLst.append(LstPlayer)
-ObjLst.append(LstPlayerPet)
-ObjLst.append(LstPlayerBullet)
+
+ObjLst.append(LstMap)
 ObjLst.append(LstMonster)
 ObjLst.append(LstMonsterBullet)
 ObjLst.append(LstItem)
@@ -27,6 +27,16 @@ ObjLst.append(LstUI)
 
 Event = 0
 
+# GameObject Render
+def draw():
+    global ObjLst
+
+    for List in ObjLst:
+        for GameObj in List:
+            GameObj.draw()
+
+    pass
+
 
 # KeyInput Event
 def handle_events():
@@ -34,13 +44,12 @@ def handle_events():
 
     for List in ObjLst:
         for GameObj in List:
-            GameObj.Handle_Events()
-
+            GameObj.handle_events()
     pass
 
 
 # GameObject Update
-def Update():
+def update():
     global Event
     global ObjLst
 
@@ -48,7 +57,7 @@ def Update():
         # num = len(List)
         # print(num)
         for GameObj in List:
-            Event = GameObj.Update()
+            Event = GameObj.update()
 
             # 게임 오브젝트 사망시 제거.
             if Event == -1:
@@ -70,7 +79,7 @@ def update():
 
     for List in ObjLst:
         for GameObj in List:
-            GameObj.Render()
+            GameObj.draw()
 
     pass
 
@@ -88,7 +97,7 @@ def All_Delete_GameObject():
     pass
 
 # GameObject Add
-def Add_GameObject(GameObject, ObjID):
+def add_gameobject(GameObject, ObjID):
     global LstPlayer
     global LstPlayerPet
     global LstPlayerBullet
@@ -100,17 +109,9 @@ def Add_GameObject(GameObject, ObjID):
 
     if ObjID == "Player":
         LstPlayer.append(GameObject)
-        pass
 
-    if ObjID == "PlayerPet":
-        LstPlayerPet.append(GameObject)
-
-    if ObjID == "PlayerBullet":
-        LstPlayerBullet.append(GameObject)
-        pass
-
-    if ObjID == "PlayerLaser":
-        LstPlayerLaser.append(GameObject)
+    if ObjID == "Map":
+        LstMap.append(GameObject)
         pass
 
     if ObjID == "Monster":

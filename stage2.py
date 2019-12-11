@@ -1,131 +1,233 @@
-
 from pico2d import *
-
 import game_framework
-import title_state
-import pause_state
-import game_world
-import stage2
+import random
+import objectMgr
+import boy
+import moster
 
-from boy import Boy
-from girl import Girl
-from map import Map
-from box import Box
-from bubble import Bubble
-from item import Item
-from boss import Boss
+# 배경 이미지
+image = None
 
-name = "MainState"
+# Monster01 생성 시간
+time_CreateMonster01 = 10.0
+time_UpdateCreateMonster01 = 10.0
 
-boy = None
-map=None
+# Monster02 생성 시간
+time_CreateMonster02 = 7.5
+time_UpdateCreateMonster02 = 15.0
 
-def collide(a,b):
-    left_a, bottom_a, right_a, top_a = a.get_bb()
-    left_b, bottom_b, right_b, top_b = b.get_bb()
-    if left_a > right_b: return False
-    if right_a < left_b: return False
-    if top_a < bottom_b: return False
-    if bottom_a > top_b: return False
-    return True
+# Monster03 생성 시간
+time_CreateMonster03 = 9.0
+time_UpdateCreateMonster03 = 9.0
 
-def enter():
-    global boy
-    boy=Boy()
-    game_world.add_object2(boy, 1)
+# Monster 생성 위치.
+Pos_CreateX = 52
+Pos_CreateY = 960
+Pos_OffsetX = 114
 
-    global boss
-    boss=Boss()
-    game_world.add_object2(boss,1)
+# Monster 생성 인자.
+Monster_Hp = 100
+Monster_Speed = 3
+Monster_Exp = 50
 
-    global map
-    map=Map()
-    game_world.add_object2(map,0)
+# Stage1 Boss 생성.
+IsCreateBoss_Stage1 = False
+BossCreateTime_Stage1 = 3.0
 
-    ## bulid box !!##
-    global box_x,box_y,box_center_x,box_center_y
-    box_x=[Box(40*(i+1),55) for i in range(15)]+[Box(40*(i+1),540) for i in range(15)]
-    for i in range(30):
-        game_world.add_object2(box_x[i],5)
-    box_y = [Box(40,42*(i+2)) for i in range(11)]+[Box(600,42*(i+2))for i in range(10)]
-    for i in range(21):
-        game_world.add_object2(box_y[i], 5)
-    box_center_x=[Box(40*(i+3),275)for i in range(5)]+[Box(40*(i+3),125)for i in range(5)]
-    box_center_y=[Box(120,42*(i+3)) for i in range(4)]+[Box(280,42*(i+3))for i in range(4)]
-    for i in range(10):
-        game_world.add_object2(box_center_x[i],5)
-    for i in range(8):
-        game_world.add_object2(box_center_y[i],5)
+# Game Play Time
+PlayTime = 0.0
 
 
-    #global item
-    #tem=[Item() for i in range(3)]
-    #game_world.add_objects(item,3)
+def Enter():
+    # 배경 이미지
+    global image
+    image = load_image("Resource/Scene/Scene_01.png")
+
+    # Player 생성
+    GameObject = boy.CPlayer()
+    objectMgr.Add_GameObject(GameObject, "Player")
 
 
+def Exit():
+    global image
+    del image
+    image = None
 
-def exit():
-    game_world.clear()
+    # ObjectMgr.All_Delete_GameObject()
+
+    global PlayTime
+    global time_CreateMonster01
+    global time_CreateMonster02
+    global time_CreateMonster03
+    global IsCreateBoss_Stage1
+    global BossCreateTime_Stage1
+
+    PlayTime = 0.0
+    time_CreateMonster01 = 0.0
+    time_CreateMonster02 = 0.0
+    time_CreateMonster03 = 0.0
+
+    IsCreateBoss_Stage1 = False
+    BossCreateTime_Stage1 = 0.0
     pass
-def pause():
-    pass
-def resume():
-    pass
-def handle_events():
-    events=get_events()
+
+
+def Handle_Events():
+    events = get_events()
+
     for event in events:
-        if event.type==SDL_QUIT:
-            game_framework.quit()
-       # elif (event.type, event.key) ==(SDL_KEYDOWN ,SDLK_SPACE):
-            #game_framework.change_state(title_state)
-        #elif (event.type,event.key)==(SDL_KEYDOWN,SDLK_p):
-            #game_framework.push_state(pause_state)
-        elif (event.type,event.key)==(SDL_KEYDOWN,SDLK_SPACE):
-            game_framework.change_state(title_state)
-        elif (event.type,event.key)==(SDL_KEYDOWN,SDLK_p):
-            game_framework.push_state(pause_state)
-        elif (event.type,event.key)==(SDL_KEYDOWN,SDLK_n):
-            game_framework.change_state(stage2)
+        if event.type == SDL_QUIT:
+            GameFramework.Quit()
         else:
-            boy.handle_event(event)
+            if (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
+                GameFramework.Quit()
 
-def update():
-   for game_object in game_world.all_objects():
-        game_object.update()
-
-   boxList=game_world.get_layer2(5)
-   itemList=game_world.get_layer2(3)
-
-   for i in range(len(itemList)):
-       if collide(boy,itemList[i]):
-        print("item")
-        boy.boy_speed()
-        game_world.remove_object(itemList[i])
-        break
-
-   for i in range(len(boxList)):
-       if collide(boy,boxList[i]):
-        print("box_collide")
-        boy.stop()
-        break
+    ObjectMgr.Handle_Events()
+    pass
 
 
+def Update():
+    global scroll_y
+    global first_image_y
+    global second_image_y
+
+    first_image_y -= scroll_y
+    second_image_y -= scroll_y
+
+    if first_image_y <= -480:
+        first_image_y = 1440
+
+    if second_image_y <= -480:
+        second_image_y = 1440
+
+    # Game Play Time
+    global PlayTime
+    PlayTime = get_time()
+
+    # print(PlayTime)
+
+    # Object Update
+    ObjectMgr.Update()
+
+    # Monster 생성.
+    global time_CreateMonster01
+    global time_CreateMonster02
+    global time_CreateMonster03
+    global time_UpdateCreateMonster01
+    global time_UpdateCreateMonster02
+    global time_UpdateCreateMonster03
+
+    global Pos_CreateX
+    global Pos_CreateY
+    global Pos_OffsetX
+    global Monster_Hp
+    global Monster_Speed
+    global Monster_Exp
+
+    # Monster 01 생성.
+    time_CreateMonster01 += 0.1
+
+    if time_CreateMonster01 >= time_UpdateCreateMonster01:
+        for n in range(random.randint(0, 2 + 1), random.randint(3, 5 + 1)):
+            PosX = Pos_CreateX + Pos_OffsetX * n
+            Monster_Hp = 100
+            Monster_Speed = 400
+            Monster_Exp = 50
+            # x, y, scaleX, scaleY, hp, speed, radius, exp, filename
+            GameObject = Monster.CMonster(PosX, Pos_CreateY,
+                                          114, 76, Monster_Hp,
+                                          Monster_Speed, 25, Monster_Exp,
+                                          "Enemy01.png")
+
+            ObjectMgr.Add_GameObject(GameObject, "Monster")
+            pass
+
+        Pos_CreateX = 76
+        time_CreateMonster01 = 0.0
+
+    # Monster 02 생성
+    Pos_CreateX = 76
+    if PlayTime >= 20.0:
+        time_CreateMonster02 += 0.1
+
+        if time_CreateMonster02 >= time_UpdateCreateMonster02:
+            for n in range(random.randint(0, 2 + 1), random.randint(3, 5 + 1)):
+                PosX = Pos_CreateX + Pos_OffsetX * n
+                Monster_Hp = 250
+                Monster_Speed = 600
+                Monster_Exp = 150
+                # x, y, scaleX, scaleY, hp, speed, radius, exp, filename
+                GameObject = Monster.CMonster(PosX, Pos_CreateY, 114, 76, Monster_Hp, Monster_Speed, 25, Monster_Exp,
+                                              "Enemy02.png")
+
+                ObjectMgr.Add_GameObject(GameObject, "Monster")
+                pass
+
+            Pos_CreateX = 76
+            time_CreateMonster02 = 0.0
+        pass
+
+    # Monster 03 생성
+    Pos_CreateX = 76
+    if PlayTime >= 30.0:
+        time_CreateMonster03 += 0.1
+
+        if time_CreateMonster03 >= time_UpdateCreateMonster03:
+            for n in range(random.randint(0, 2 + 1), random.randint(3, 5 + 1)):
+                PosX = Pos_CreateX + Pos_OffsetX * n
+                Monster_Hp = 500
+                Monster_Speed = 700
+                Monster_Exp = 300
+                # x, y, scaleX, scaleY, hp, speed, radius, exp, filename
+                GameObject = Monster.CMonster(PosX, Pos_CreateY, 114, 76, Monster_Hp, Monster_Speed, 25, Monster_Exp,
+                                              "Enemy03.png")
+
+                ObjectMgr.Add_GameObject(GameObject, "Monster")
+                pass
+
+            Pos_CreateX = 76
+            time_CreateMonster03 = 0.0
+        pass
+
+    # Boss Monster 생성.
+    global IsCreateBoss_Stage1
+    global BossCreateTime_Stage1
+
+    if PlayTime >= BossCreateTime_Stage1:
+        if not IsCreateBoss_Stage1:
+            # Stage1 보스 생성.
+            ObjectMgr.Add_GameObject(Boss_Stage1.CBossStage1(ObjectMgr.LstPlayer[0]), "Monster")
+            IsCreateBoss_Stage1 = True
+            pass
+
+    pass
 
 
+def Render():
+    global scroll_y
+    global first_image_y
+    global second_image_y
 
-def WallCollide():
-    global walls,boy
-    for wall in walls:
-        if collide(wall,boy):
-            boy.stop()
-
-
-def draw():
+    # Object Render
     clear_canvas()
-    for game_object in game_world.all_objects():
-        game_object.draw()
+
+    # left, bottom, right, top, posX, posY, scaleX, scaleY
+    image.clip_draw(0, 0, 384, 512, 360, first_image_y, 720, 960)
+
+    # left, bottom, right, top, posX, posY, scaleX, scaleY
+    image.clip_draw(0, 0, 384, 512, 360, second_image_y, 720, 960)
+
+    # image.draw(360, 480, 720, 960)
+    ObjectMgr.Render()
+
     update_canvas()
+    # delay(0.015)
+    pass
 
 
+def Pause():
+    pass
 
 
+def Resume():
+    pass

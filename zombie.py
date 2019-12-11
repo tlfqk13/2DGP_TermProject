@@ -5,7 +5,7 @@ from BehaviorTree import BehaviorTree, SelectorNode, SequenceNode, LeafNode
 from bubble_destroy import Bubble_destroy
 from pico2d import *
 from boy_death import Death
-import world_build_state
+
 import game_world
 
 
