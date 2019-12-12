@@ -90,7 +90,7 @@ class CBoy:
         self.L_image.clip_draw(int(self.frame) * 44, 0, 44, 52, self.x, self.y)
 
     def handle_events(self):
-
+        pass
 
     def stop(self):
          self.velocity=0
